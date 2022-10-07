@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import javax.validation.constraints.NotNull;
+
 @Table(name = "players")
 @Data
 @AllArgsConstructor
@@ -15,12 +17,12 @@ public class Player {
 
     @Id
     private Integer id;
-    private String user;
-    private String ip;
+
+    @NotNull
+    private String name;
 
 
-    public Player(PlayerInputDto playerInputDto){
-        setUser(playerInputDto.getName());
+    public Player(PlayerInputDto playerInputDto) {
+        name =  playerInputDto.getName();
     }
-
 }

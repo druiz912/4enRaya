@@ -1,11 +1,10 @@
 package com.druiz.fullstack.back.infrastructure.controller;
 
 import com.druiz.fullstack.back.application.GameService;
-import com.druiz.fullstack.back.domain.Game;
-import com.druiz.fullstack.back.domain.GamePlay;
-import com.druiz.fullstack.back.infrastructure.controller.dto.input.ConnectInputDto;
+import com.druiz.fullstack.back.domain.Board;
+import com.druiz.fullstack.back.domain.Player;
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.PlayerInputDto;
-import com.druiz.fullstack.back.infrastructure.controller.dto.output.GameOutputDto;
+import com.druiz.fullstack.back.infrastructure.controller.dto.output.BoardOutputDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,28 +25,15 @@ public class GamesController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @GetMapping
-    private Flux<Game> getGames(){
+    private Flux<Board> getGames(){
+        log.info("****CARGANDO****");
         return gameService.getGames();
     }
 
-    @PostMapping("/start")
-    public Mono<GameOutputDto> start(@RequestBody PlayerInputDto player){
-        log.info("start new game request {}",player);
+    @PostMapping("/createGame")
+    public Mono<BoardOutputDto> createGame(@RequestBody PlayerInputDto player) {
+        log.info("******DATOS DE JUGADOR HOST: " + player + "***********");
         return gameService.createGame(player);
-    }
-
-    @PostMapping("/connect")
-    public Mono<Object> connect(@RequestBody ConnectInputDto request){
-        log.info("connect request: {}",request);
-        return gameService.connectToGame(request.getPlayer2(),request.getGameId());
-    }
-
-    @PostMapping("/gameplay")
-    public Mono<Game> gameplay(@RequestBody GamePlay request){
-        log.info("gameplay: {}",request);
-
-        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(),gameService.gameplay(request));
-        return gameService.gameplay(request);
     }
 
 }
