@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.druiz.fullstack</groupId>
 	<artifactId>back</artifactId>
-	<version>0.0.1-BACK</version>
+	<version>4enRaya</version>
 	<name>back</name>
 	<description>Juego de 4 en raya</description>
 	<properties>
@@ -85,6 +85,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>springwebflux-4connect</finalName>
 	</build>
 
 </project>

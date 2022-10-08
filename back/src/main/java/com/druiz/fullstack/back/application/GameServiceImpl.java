@@ -33,26 +33,26 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Mono<BoardOutputDto> createGame(PlayerInputDto playerInputDto) {
-        Player newPlayer = new Player(playerInputDto);
-        var newPlayerSaved = playersRepo.save(newPlayer);
+        Player newPlayerInput = new Player(playerInputDto);
+        var newPlayerDB = playersRepo.save(newPlayerInput);
         // 3. Creamos el tablero
         Board tablero = new Board();
         tablero.setMatriz(new int[6][7]);
         tablero.setColumns(7);
         tablero.setRows(6);
-
-
-        return newPlayerSaved.flatMap(jugador1 -> {
-            tablero.setIdHostPlayer(jugador1.getId());
+        // Devolvemos un Mono<Player> por ende usamos flatMap para poder acceder al id del jugador 1 previamente guardado.
+        return newPlayerDB.flatMap(player1 -> {
+            tablero.setIdHostPlayer(player1.getId());
             tablero.setIdGuestPlayer(0);
             // El boardRepo.save(tablero) --> Nos devuelve un Mono<Board> hay que mapearlo a Mono<BoardOutputDto>
             return boardRepo.save(tablero).map(BoardOutputDto::new)
-                    .switchIfEmpty(Mono.error(new UnprocessableException("No se pudo guardar el tablero")));
+                    .switchIfEmpty(Mono.error(new UnprocessableException("No se pudo crear el tablero")));
         });
     }
 
-    public Flux<Board> getGames() {
-        return boardRepo.findAll();
+    @Override
+    public Flux<BoardOutputDto> findAllGames() {
+        return boardRepo.findAll().map(BoardOutputDto::new);
     }
 
 

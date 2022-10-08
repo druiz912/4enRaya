@@ -1,4 +1,4 @@
-FROM openjdk:18
-EXPOSE 8081
-COPY /target/*.jar /usr/local/lib/backend.jar
-ENTRYPOINT ["java","-jar","/usr/local/lib/backend.jar"]
+FROM openjdk:17
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} springwebflux-4connect.jar
+ENTRYPOINT ["java","-jar","/springwebflux-4connect.jar"]
