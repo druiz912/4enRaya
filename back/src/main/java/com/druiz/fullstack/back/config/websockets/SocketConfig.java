@@ -13,7 +13,7 @@ public class SocketConfig implements WebSocketMessageBrokerConfigurer {
     // Añadir endpoint de la partida(movimientos)
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/partida").withSockJS();
+        registry.addEndpoint("/move").withSockJS();
 
     }
 

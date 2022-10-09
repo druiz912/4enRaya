@@ -20,10 +20,10 @@ public class Board {
     private int id;
     // Número de filas
     @NotNull
-    private int rows;
+    private int numRows;
     // Número de columnas
     @NotNull
-    private int columns;
+    private int numColumns;
     @NotNull
     private int idHostPlayer;
     @NotNull

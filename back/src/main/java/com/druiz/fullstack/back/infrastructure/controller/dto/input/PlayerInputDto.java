@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlayerInputDto {
 
-    private String user;
+    private String userPlayer;
 
 }

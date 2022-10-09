@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 public class BoardOutputDto {
 
     private int idBoard;
-    private int rows;
-    private int columns;
+    private int numRows;
+    private int numColumns;
     private int idHostPlayer;
     private int idGuestPlayer;
     private int [][] matriz;
 
     public BoardOutputDto(Board board) {
         idBoard = board.getId();
-        rows = board.getRows();
-        columns = board.getColumns();
+        numRows = board.getNumRows();
+        numColumns = board.getNumColumns();
         idHostPlayer = board.getIdHostPlayer();
         idGuestPlayer = board.getIdGuestPlayer();
         matriz = board.getMatriz();

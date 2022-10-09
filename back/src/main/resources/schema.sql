@@ -1,19 +1,20 @@
 CREATE TABLE IF NOT EXISTS players(
-    id SERIAL PRIMARY KEY,
-    user TEXT NOT NULL
+    id serial PRIMARY KEY,
+    user_player VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS board
+CREATE TABLE IF NOT EXISTS boards
 (
-    id integer NOT NULL PRIMARY KEY,
-    player1 integer NOT NULL,
-    player2 integer NOT NULL,
-    board integer NOT NULL,
-    CONSTRAINT fk1 FOREIGN KEY (player1)
-      REFERENCES players (id) ON DELETE CASCADE,
-    CONSTRAINT fk2 FOREIGN KEY (player2)
-      REFERENCES players (id) ON DELETE CASCADE,
-    unique(id)
+    id serial NOT NULL PRIMARY KEY,
+    num_rows integer NOT NULL,
+    num_columns integer NOT NULL,
+    id_host_player integer NOT NULL,
+    id_guest_player integer,
+    matriz integer[][] NOT NULL,
+    CONSTRAINT FK_board_player1 FOREIGN KEY (id_host_player)
+      REFERENCES players (id) ON DELETE SET NULL,
+    CONSTRAINT FK_board_player2 FOREIGN KEY (id_guest_player)
+      REFERENCES players (id) ON DELETE SET NULL
 );
 
 

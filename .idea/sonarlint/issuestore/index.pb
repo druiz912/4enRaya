@@ -324,14 +324,10 @@ Eback/src/test/java/com/druiz/fullstack/back/BackApplicationTests.java,3\4\343e
 Nback/src/main/java/com/druiz/fullstack/back/config/exceptions/CustomError.java,6\7\67c201d8549567258a6a55fd43ca35c4e7a25b44
 ‰
 Yback/src/main/java/com/druiz/fullstack/back/config/exceptions/CustomExceptionHandler.java,a\5\a5bb0e42a0844a37d5cbb8b1313b552c979c37f3
-s
-Cfront/src/main/java/com/druiz/fullstack/front/FrontApplication.java,6\f\6f15b0b875b9af6100794e0bf725ab22ebade637
 x
 Hfront/src/test/java/com/druiz/fullstack/front/FrontApplicationTests.java,4\1\41225cf07875a7c6eaad0f861be5acdeab109890
 „
 Tback/src/main/java/com/druiz/fullstack/back/config/exceptions/NotFoundException.java,6\4\646fa46d527b0a50b6c74ad76db9b872b7ac7b11
-=
-front/pom.xml,2\f\2f8be77c8aff8b0a9a795737c36dbd0759daa225
 ‰
 Yback/src/main/java/com/druiz/fullstack/back/config/exceptions/UnprocessableException.java,f\c\fcfbc42a43645466dd87804e9d77793134bb6e5b
 w
@@ -680,3 +676,9 @@ h
 8.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml,d\7\d748d8766080efc90fdc1cab153cb0f95a859ff1
 ˆ
 X.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_2_7_4.xml,2\a\2a9a17cbcb6ba4d229e4dbb1d011ac20bb3a32e5
+{
+Kback/src/main/java/com/druiz/fullstack/back/config/mappers/BoardMapper.java,5\0\50f2f5abb168ed4f9d28f1610a44de9fd039bd36
+€
+Pback/src/main/java/com/druiz/fullstack/back/infrastructure/repo/PlayersRepo.java,c\c\cced19a7bdcc496f142804fd47179857c7210ff5
+|
+Lback/src/main/java/com/druiz/fullstack/back/config/mappers/PlayerMapper.java,4\7\479323da2b9d27ed3ec7fcb7a34f4f2c1c3fa7f9

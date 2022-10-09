@@ -19,10 +19,10 @@ public class Player {
     private Integer id;
 
     @NotNull
-    private String user;
+    private String userPlayer;
 
 
     public Player(PlayerInputDto playerInputDto) {
-        user =  playerInputDto.getUser();
+        userPlayer =  playerInputDto.getUserPlayer();
     }
 }
