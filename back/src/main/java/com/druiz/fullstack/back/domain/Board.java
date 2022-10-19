@@ -31,7 +31,16 @@ public class Board {
     @NotNull
     private int[][] matriz;
 
-    // Falta añadir si hay ganador
+    private GameStatus status;
 
 
+    public Board(int id, int numRows, int numColumns, int idHostPlayer, int idGuestPlayer, @NotNull int[][] matriz, GameStatus status) {
+        this.id = id;
+        this.numRows = numRows;
+        this.numColumns = numColumns;
+        this.idHostPlayer = idHostPlayer;
+        this.idGuestPlayer = idGuestPlayer;
+        this.matriz = matriz;
+        this.status = status;
+    }
 }

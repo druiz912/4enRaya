@@ -7,7 +7,6 @@ import reactor.core.publisher.Flux;
 
 @ReactiveFeignClient(url = "http://localhost:8081/game", name = "board-back")
 public interface BoardFeign {
-
     @GetMapping
     Flux<Board> getBoards();
 

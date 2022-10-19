@@ -4,6 +4,7 @@ import com.druiz.fullstack.back.domain.Board;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface BoardRepo extends ReactiveCrudRepository<Board, Integer> {
 
@@ -16,6 +17,4 @@ public interface BoardRepo extends ReactiveCrudRepository<Board, Integer> {
             " FROM board b" +
             " WHERE b.player2 IS NOT NULL")
     Flux<Board> findAllTwoPlayers();
-
-    
 }

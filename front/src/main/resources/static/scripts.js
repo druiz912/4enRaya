@@ -3,20 +3,20 @@ const HEADERS = {
   }
 const url = 'http://localhost:8081/game';
 let stompClient;
-let gameId;
-let playerType;
+let boardId;
+let playerId;
 
 
-function connectToSocket(gameId) {
+function connectToSocket(boardId) {
 
     console.log("Conectando al juego");
-    let socket = new SockJS(url + "/gameplay");
+    let socket = new SockJS(url + "/move");
     stompClient = Stomp.over(socket);
     console.log(stompClient);
 
     stompClient.connect({}, function (frame) {
         console.log("connected to the frame: " + frame);
-        stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
+        stompClient.subscribe("/topic/game-progress/" + boardId, function (response) {
             let data = JSON.parse(response.body);
             showResponse();
             console.log(data);
@@ -25,19 +25,17 @@ function connectToSocket(gameId) {
 
 }
 
-async function fetchPlayer1(){
-    const input = document.getElementById("player").value;
+async function crearPlayer1(){
+    const inputPlayer1 = document.getElementById("player").value;
     const form = document.getElementById("formTable")
     const btn = document.getElementById("btn")
     const formTable = document.getElementById("formTable");
-
-
 
        const res = await fetch('http://localhost:8081/game/createGame', {
             method:'POST',
             headers: HEADERS,
             body:JSON.stringify({
-                name:input
+                userPlayer:inputPlayer1
             })
         })
         console.log(res.status)
@@ -53,8 +51,8 @@ async function fetchPlayer1(){
 
                  if(data){
                      function socket(data) {
-                                         gameId = data.id;
-                                         playerType = 'GREEN';
+                                         boardId = data.id;
+                                         playerId = playerId;
                                          connectToSocket(data.id);
                                          alert("Your created a game. Game id is: " + data.id);
                                          gameOn = true;
@@ -66,16 +64,17 @@ async function fetchPlayer1(){
 
 }
 
-async function fetchPlayer2(){
-    const inputPlayer = document.getElementById("player").value;
-    const gameId = document.getElementById("gameId").value;
+async function crearPlayer2(){
+    const inputPlayer2 = document.getElementById("player").value;
+    const boardId = document.getElementById("boardId").value;
+    parseInt(boardId);
     const btnJoin = document.getElementById("btnJoin")
 
-       const res = await fetch('http://localhost:8081/game/connect/{gameId}', {
+       const res = await fetch('http://localhost:8081/game/connect/{boardId}', {
             method:'POST',
             headers: HEADERS,
             body:JSON.stringify({
-                player2:{name:inputPlayer},
+                userPlayer:inputPlayer2
             })
         })
 
@@ -86,7 +85,7 @@ async function fetchPlayer2(){
 
             if(data){
                      function socket(data) {
-                                      gameId = data.id;
+                                      boardId = data.id;
                                       playerType = 'RED';
                                       connectToSocket(data.id);
                                       console.log(data)
@@ -100,13 +99,15 @@ async function fetchPlayer2(){
 
 async function moveUser(){
 
+
+
     const res = await fetch('http://localhost:8081/game/move', {
                 method:'POST',
                 headers: HEADERS,
                 body:JSON.stringify({
-                    type:"GREEN",
-                    column:"0",
-                    gameId:"55"
+                    idPlayer:playerId,
+                    boardId:"0",
+                    column:"55"
                 })
             })
     const data = await res.json();
@@ -164,3 +165,4 @@ console.log("Clickeado")
                break;
 
     }
+}
