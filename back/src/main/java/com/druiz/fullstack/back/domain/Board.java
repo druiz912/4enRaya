@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "boards")
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Board {
 
