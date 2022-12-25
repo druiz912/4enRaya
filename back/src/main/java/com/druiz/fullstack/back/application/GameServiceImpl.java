@@ -114,6 +114,7 @@ public class GameServiceImpl implements GameService {
                 }
             }
         }
+        boardGame[movimiento.getColumn()][counterIndex] = movimiento.getValue();
 
         boardRepo.save(tablero).subscribe();
     }

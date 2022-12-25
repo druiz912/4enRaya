@@ -11,4 +11,5 @@ public class MovimientoDto {
     private Integer idPlayer;
     private Integer idBoard;
     private Integer column;
+    private Integer value;
 }
