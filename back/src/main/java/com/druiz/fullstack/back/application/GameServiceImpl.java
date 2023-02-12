@@ -9,7 +9,7 @@ import com.druiz.fullstack.back.domain.Player;
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.MovimientoDto;
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.PlayerInputDto;
 import com.druiz.fullstack.back.infrastructure.controller.dto.output.BoardOutputDto;
-import com.druiz.fullstack.back.infrastructure.repo.BoardRepo;
+import com.druiz.fullstack.back.infrastructure.repo.TableroRepo;
 import com.druiz.fullstack.back.infrastructure.repo.PlayerRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 public class GameServiceImpl implements GameService {
 
     @Autowired
-    private BoardRepo boardRepo;
+    private TableroRepo tableroRepo;
 
     @Autowired
     private PlayerRepo playerRepo;
@@ -55,7 +55,7 @@ public class GameServiceImpl implements GameService {
         return newPlayerDB.flatMap(player1 -> {
             tablero.setIdHostPlayer(player1.getId());
             tablero.setIdGuestPlayer(0);
-            return boardRepo.save(tablero)
+            return tableroRepo.save(tablero)
                     .map(BoardOutputDto::new)
                     .switchIfEmpty(Mono.error(new UnprocessableException("Failed to save board")));
         })
@@ -71,7 +71,7 @@ public class GameServiceImpl implements GameService {
                 .onErrorResume(e -> Mono.error(new UnprocessableException("Failed to save player")));
 
         // Una vez guardado el jugador2 (newPlayer2InDB) le damos el id del tablero
-        return newPlayer2InDB.flatMap(jugador2 -> boardRepo.findById(idBoard)
+        return newPlayer2InDB.flatMap(jugador2 -> tableroRepo.findById(idBoard)
                 .switchIfEmpty(Mono.error(new NotFoundException("Not found board with id " + idBoard)))
                 //
                 .flatMap(board1 -> {
@@ -79,7 +79,7 @@ public class GameServiceImpl implements GameService {
                     board1.setIdGuestPlayer(jugador2.getId());
                     board1.setStatus(GameStatus.IN_PROGRESS);
                     // Con los nuevos valores la volvemos a guardar
-                    return boardRepo.save(board1).map(BoardOutputDto::new)
+                    return tableroRepo.save(board1).map(BoardOutputDto::new)
                             .switchIfEmpty(Mono.error(new UnprocessableException("Failed to save board")));
 
                 })).onErrorResume(e -> Mono.error(new UnprocessableException("Could not connect to game")));
@@ -90,7 +90,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Mono<Void> colocarFicha(MovimientoDto movimiento) {
-        Mono<Board> boardMono = boardRepo.findById(movimiento.getIdBoard())
+        Mono<Board> boardMono = tableroRepo.findById(movimiento.getIdBoard())
                 .switchIfEmpty(Mono.error(new NotFoundException("Could not find board with id " + movimiento.getIdBoard())));
         return Mono.just(boardMono
                         .subscribe(tableroMono1 -> realizarMovimiento(movimiento, tableroMono1)))
@@ -116,14 +116,14 @@ public class GameServiceImpl implements GameService {
         }
         boardGame[movimiento.getColumn()][counterIndex] = movimiento.getValue();
 
-        boardRepo.save(tablero).subscribe();
+        tableroRepo.save(tablero).subscribe();
     }
 
 
     /***** FIND *****/
     @Override
     public Flux<BoardOutputDto> findAllGames() {
-        return boardRepo.findAll()
+        return tableroRepo.findAll()
                 .map(BoardOutputDto::new)
                 .doOnNext(b -> log.info("procesando: " + b.toString()))
                 .switchIfEmpty(Flux.error(new NotFoundException("No games found")));
@@ -131,14 +131,14 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Mono<BoardOutputDto> findBoardById(int idBoard) {
-        return boardRepo.findById(idBoard)
+        return tableroRepo.findById(idBoard)
                 .map(BoardOutputDto::new)
                 .switchIfEmpty(Mono.error(new NotFoundException("No")));
     }
 
     @Override
     public Flux<BoardOutputDto> findBoardsWithOnePlayer() {
-        return boardRepo.findAllOnlyOnePlayer()
+        return tableroRepo.findAllOnlyOnePlayer()
                 .map(BoardOutputDto::new)
                 .doOnNext(b -> log.info("procesando: " + b.toString()))
                 .switchIfEmpty(Flux.error(new NotFoundException("Not found board with one player")));
@@ -148,7 +148,7 @@ public class GameServiceImpl implements GameService {
     //
     @Override
     public Mono<Void> deleteBoardById(int boardId) {
-        return boardRepo.deleteById(boardId);
+        return tableroRepo.deleteById(boardId);
     }
 
 

@@ -3,7 +3,7 @@ package com.druiz.fullstack.back.application;
 import com.druiz.fullstack.back.application.port.PlayerService;
 import com.druiz.fullstack.back.config.exceptions.NotFoundException;
 import com.druiz.fullstack.back.infrastructure.controller.dto.output.PlayerOutputDto;
-import com.druiz.fullstack.back.infrastructure.repo.BoardRepo;
+import com.druiz.fullstack.back.infrastructure.repo.TableroRepo;
 import com.druiz.fullstack.back.infrastructure.repo.PlayerRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class PlayerServiceImpl implements PlayerService {
     PlayerRepo playerRepo;
 
     @Autowired
-    BoardRepo boardRepo;
+    TableroRepo tableroRepo;
 
     @Override
     public Flux<PlayerOutputDto> findAllPlayers() {
