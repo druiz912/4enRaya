@@ -9,17 +9,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerOutputDto {
+public class JugadorOutputDto {
 
     private int idPlayer;
     private String userPlayer;
 
-    public PlayerOutputDto(Board board) {
+    public JugadorOutputDto(Board board) {
         board.setIdHostPlayer(getIdPlayer());
         board.setIdGuestPlayer(getIdPlayer());
     }
 
-    public PlayerOutputDto(Jugador jugador) {
+    public JugadorOutputDto(Jugador jugador) {
         idPlayer = jugador.getId();
         userPlayer = jugador.getUserPlayer();
     }
