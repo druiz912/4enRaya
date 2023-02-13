@@ -1,6 +1,6 @@
 package com.druiz.fullstack.back.config.mappers;
 
-import com.druiz.fullstack.back.domain.Player;
+import com.druiz.fullstack.back.domain.Jugador;
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.PlayerInputDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 public interface PlayerMapper {
 
     @Mapping(target = "id", ignore = true)
-    Player toEntity(PlayerInputDto playerInputDto);
+    Jugador toEntity(PlayerInputDto playerInputDto);
 
 }

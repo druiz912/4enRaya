@@ -1,7 +1,7 @@
 package com.druiz.fullstack.back.infrastructure.controller;
 
 import com.druiz.fullstack.back.application.port.PlayerService;
-import com.druiz.fullstack.back.infrastructure.controller.dto.output.PlayerOutputDto;
+import com.druiz.fullstack.back.infrastructure.controller.dto.output.JugadorOutputDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,19 +20,19 @@ public class PlayerController {
     PlayerService playerService;
 
     @GetMapping("id/{playerId}")
-    public Mono<PlayerOutputDto> getPlayerById(@PathVariable("idPlayer") int playerId) {
+    public Mono<JugadorOutputDto> getPlayerById(@PathVariable("idPlayer") int playerId) {
         log.info("***** CARGANDO DATOS  -->" + playerId + "*****");
         return playerService.findPlayerById(playerId);
     }
 
     @GetMapping("user/{userPlayer}")
-    public Mono<PlayerOutputDto> getPlayerByUserPlayer(@PathVariable String userPlayer) {
+    public Mono<JugadorOutputDto> getPlayerByUserPlayer(@PathVariable String userPlayer) {
         log.info("***** CARGANDO DATOS  -->" + userPlayer + "*****");
         return playerService.findPlayerByUserPlayer(userPlayer);
     }
 
     @GetMapping
-    public Flux<PlayerOutputDto> getAllPlayers(){
+    public Flux<JugadorOutputDto> getAllPlayers(){
         return playerService.findAllPlayers();
     }
 
