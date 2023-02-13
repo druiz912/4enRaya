@@ -2,7 +2,7 @@ package com.druiz.fullstack.back.application;
 
 import com.druiz.fullstack.back.application.port.PlayerService;
 import com.druiz.fullstack.back.config.exceptions.NotFoundException;
-import com.druiz.fullstack.back.infrastructure.controller.dto.output.PlayerOutputDto;
+import com.druiz.fullstack.back.infrastructure.controller.dto.output.JugadorOutputDto;
 import com.druiz.fullstack.back.infrastructure.repo.TableroRepo;
 import com.druiz.fullstack.back.infrastructure.repo.PlayerRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -22,22 +22,22 @@ public class PlayerServiceImpl implements PlayerService {
     TableroRepo tableroRepo;
 
     @Override
-    public Flux<PlayerOutputDto> findAllPlayers() {
+    public Flux<JugadorOutputDto> findAllPlayers() {
         return playerRepo.findAll()
-                .map(PlayerOutputDto::new)
+                .map(JugadorOutputDto::new)
                 .doOnNext(p -> log.info("procesando: " + p.toString()))
                 .switchIfEmpty(Flux.error(new NotFoundException("Not found players")));
     }
     @Override
-    public Mono<PlayerOutputDto> findPlayerById(int idPlayer){
+    public Mono<JugadorOutputDto> findPlayerById(int idPlayer){
         return playerRepo.findById(idPlayer)
-                .map(PlayerOutputDto::new)
+                .map(JugadorOutputDto::new)
                 .switchIfEmpty(Mono.error(new NotFoundException("Not found players with id " + idPlayer)));
     }
     @Override
-    public Mono<PlayerOutputDto> findPlayerByUserPlayer(String userPlayer){
+    public Mono<JugadorOutputDto> findPlayerByUserPlayer(String userPlayer){
         return playerRepo.findByUserPlayer(userPlayer)
-                .map(PlayerOutputDto::new)
+                .map(JugadorOutputDto::new)
                 .switchIfEmpty(Mono.error(new NotFoundException("Not found players with user " + userPlayer)));
     }
 

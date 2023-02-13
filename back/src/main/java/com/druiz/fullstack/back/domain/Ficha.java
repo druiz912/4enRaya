@@ -2,24 +2,22 @@ package com.druiz.fullstack.back.domain;
 
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Table;
 
 /**
  * Representa una ficha en el tablero de juego de 4 en raya.
  */
-@Entity
+@Table
 @NoArgsConstructor
 public class Ficha {
     @Id
-    private String id;
+    private Integer id;
     private Jugador jugador;
     private int fila;
     private int columna;
 
     /**
+     * MOVIMIENTO
      * Crea una nueva ficha en el tablero de juego de 4 en raya.
      *
      * @param jugador el jugador que colocó la ficha
@@ -33,10 +31,21 @@ public class Ficha {
     }
 
     /**
+     * Crea una nueva ficha en el tablero de juego de 4 en raya.
+     *
+     * @param fila    la fila en la que se colocó la ficha
+     * @param columna la columna en la que se colocó la ficha
+     */
+    public Ficha(int fila, int columna) {
+        this.fila = fila;
+        this.columna = columna;
+    }
+
+    /**
      * Devuelve el identificador único de la ficha.
      * @return el identificador único de la ficha
      */
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -44,7 +53,7 @@ public class Ficha {
      * Establece el identificador único de la ficha.
      * @param id el identificador único de la ficha
      */
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
