@@ -10,12 +10,12 @@ import javax.persistence.GenerationType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "boards")
-@Data
-@NoArgsConstructor
 /**
  * Representa un tablero de juego de 4 en raya.
  */
+@Table(name = "Tableros")
+@Data
+@NoArgsConstructor
 public class Tablero {
 
     @Id
@@ -23,7 +23,12 @@ public class Tablero {
     private int id;
     private int filas;
     private int columnas;
-    private List<Ficha> fichas;
+    private Ficha[][] fichas;
+
+    // Debemos inicializar la lista "jugadores" para evitar un NullPointerException
+    private List<Jugador> jugadores = new ArrayList<>();
+
+    private String status;
 
     /**
      * Crea un nuevo tablero de juego de 4 en raya.
@@ -31,45 +36,51 @@ public class Tablero {
      * @param filas el número de filas del tablero
      * @param columnas el número de columnas del tablero
      */
-    public Tablero(int filas, int columnas) {
+    public Tablero(int filas, int columnas, List<Jugador> jugadores) {
         this.filas = filas;
         this.columnas = columnas;
-        this.fichas = new ArrayList<>();
+        this.fichas = new Ficha[filas][columnas];
+        if (this.jugadores.size() == 1) {
+            this.status = "Game not started";
+        } else if (this.jugadores.size() == 2) {
+            this.status = "Game completed! but not finished";
+        }
+        this.jugadores = jugadores;
     }
 
     /**
-     * Devuelve el número de filas del tablero.
-     *
-     * @return el número de filas del tablero
+     * Establece las fichas en el tablero inicializando una matriz de Ficha.
      */
-    public int getFilas() {
-        return filas;
+    public void setFichas() {
+        this.fichas = new Ficha[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                this.fichas[i][j] = new Ficha();
+            }
+        }
+    }
+
+
+    /**
+     * Añade un jugador al tablero si el ID del jugador no es nula.
+     *
+     * @param jugador El jugador a añadir.
+     */
+    public void addJugador(Jugador jugador){
+        if (jugador.getId() != null){
+            this.jugadores.add(jugador);
+        }
     }
 
     /**
-     * Devuelve el número de columnas del tablero.
+     * Elimina un jugador del tablero si el ID del jugador no es nula.
      *
-     * @return el número de columnas del tablero
+     * @param jugador El jugador a eliminar.
      */
-    public int getColumnas() {
-        return columnas;
+    protected void removeJugador(Jugador jugador){
+        if (jugador.getId() != null){
+            this.jugadores.remove(jugador);
+        }
     }
 
-    /**
-     * Devuelve la lista de fichas colocadas en el tablero.
-     *
-     * @return la lista de fichas colocadas en el tablero
-     */
-    public List<Ficha> getFichas() {
-        return fichas;
-    }
-
-    /**
-     * Agrega una nueva ficha al tablero.
-     *
-     * @param ficha la ficha a agregar
-     */
-    public void agregarFicha(Ficha ficha) {
-        fichas.add(ficha);
-    }
 }
