@@ -1,7 +1,7 @@
 package com.druiz.fullstack.back.infrastructure.controller.dto.output;
 
 import com.druiz.fullstack.back.domain.Board;
-import com.druiz.fullstack.back.domain.Player;
+import com.druiz.fullstack.back.domain.Jugador;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +19,8 @@ public class PlayerOutputDto {
         board.setIdGuestPlayer(getIdPlayer());
     }
 
-    public PlayerOutputDto(Player player) {
-        idPlayer = player.getId();
-        userPlayer = player.getUserPlayer();
+    public PlayerOutputDto(Jugador jugador) {
+        idPlayer = jugador.getId();
+        userPlayer = jugador.getUserPlayer();
     }
 }
