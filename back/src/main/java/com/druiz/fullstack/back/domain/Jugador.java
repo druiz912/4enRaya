@@ -29,11 +29,14 @@ public class Jugador {
      *  1. El campo value especifica la entidad a la que se refiere la relación.
      *  2. El campo to especifica la clase a la que va en la entidad actual (Jugador), se usará para la relación
      */
+    /*
     @Reference(
             value = User.class,
             to = Jugador.class
     )
     private User user;
+    */
+
 
     public Jugador(int id, String userPlayer){
         this.id = id;
@@ -43,4 +46,9 @@ public class Jugador {
     public Jugador(JugadorInputDto dto) {
         this.userPlayer =  dto.getUserPlayer();
     }
+
+   public Jugador(Jugador jugador) {
+        this.id = jugador.getId();
+        this.userPlayer = jugador.getUserPlayer();
+   }
 }
