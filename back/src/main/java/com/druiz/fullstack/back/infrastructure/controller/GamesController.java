@@ -2,7 +2,7 @@ package com.druiz.fullstack.back.infrastructure.controller;
 
 import com.druiz.fullstack.back.application.port.GameService;
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.JugadorInputDto;
-import com.druiz.fullstack.back.infrastructure.controller.dto.input.MovimientoDto;
+import com.druiz.fullstack.back.infrastructure.controller.dto.input.FichaInputDto;
 import com.druiz.fullstack.back.infrastructure.controller.dto.output.TableroOutputDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +67,12 @@ public class GamesController {
     }
 
     @PostMapping("move")
-    public Mono<TableroOutputDto> movimiento(@RequestBody MovimientoDto movimiento) {
+    public Mono<TableroOutputDto> movimiento(@RequestBody FichaInputDto movimiento) {
         log.info("******CARGANDO DATOS******");
         log.info("******DATOS RECIBIDOS: " + movimiento + "******");
         gameService.colocarFicha(movimiento);
-        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + movimiento.getIdBoard(),gameService.colocarFicha(movimiento));
-        return gameService.findBoardById(movimiento.getIdBoard());
+        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + movimiento.getIdTablero(),gameService.colocarFicha(movimiento));
+        return gameService.findBoardById(movimiento.getIdTablero());
     }
 
 
