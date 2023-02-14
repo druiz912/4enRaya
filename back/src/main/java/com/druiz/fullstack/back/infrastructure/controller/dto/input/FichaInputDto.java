@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovimientoDto {
+public class FichaInputDto {
 
     @NotNull
     private Integer idJugador;
