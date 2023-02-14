@@ -1,9 +1,7 @@
 package com.druiz.fullstack.back.application.port;
 
 import com.druiz.fullstack.back.infrastructure.controller.dto.input.JugadorInputDto;
-import com.druiz.fullstack.back.infrastructure.controller.dto.input.MovimientoDto;
-import com.druiz.fullstack.back.infrastructure.controller.dto.input.PlayerInputDto;
-import com.druiz.fullstack.back.infrastructure.controller.dto.output.BoardOutputDto;
+import com.druiz.fullstack.back.infrastructure.controller.dto.input.FichaInputDto;
 import com.druiz.fullstack.back.infrastructure.controller.dto.output.TableroOutputDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,7 +29,7 @@ public interface GameService {
     /* Conectarse a una partida */
     Mono<TableroOutputDto> connectToGame(JugadorInputDto player2, int idBoard);
 
-    Mono<Void> colocarFicha(MovimientoDto movimiento);
+    Mono<Void> colocarFicha(FichaInputDto movimiento);
 
 
 
