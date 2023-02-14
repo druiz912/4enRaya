@@ -1062,5 +1062,11 @@ bback/src/main/java/com/druiz/fullstack/back/infrastructure/controller/auth/Regi
 back/pom.xml,e\a\ea3d82eba0d3ead41a6cf41b81f6ffc13f326c3e
 w
 Gback/src/main/java/com/druiz/fullstack/back/config/security/Security.md,6\a\6a56106c373ae529502ac161070c12500b0cbdae
-†
-Vback/src/main/java/com/druiz/fullstack/back/config/security/SecurityConfiguration.java,0\d\0dee15a6c1bdeff9b87a2ca0c51f3ca8a6a28d17
+r
+Bback/src/main/java/com/druiz/fullstack/back/domain/GameStatus.java,2\a\2a2e3b41ffa8d9b93861fc18de2d27797f20b62f
+?
+back/Dockerfile,3\2\322cb9abe9041da7a143f9121421b5b837dc5474
+€
+Pback/src/main/java/com/druiz/fullstack/back/infrastructure/repo/TableroRepo.java,c\0\c06c55ac8e6d3ac9e6cdf5508deed9c3bc8a7597
+
+Oback/src/main/java/com/druiz/fullstack/back/infrastructure/repo/PlayerRepo.java,d\5\d5662e9bafbe55813556cb5cce7e65ab61877b9c
