@@ -1,42 +1,68 @@
 package com.druiz.fullstack.back.domain;
 
-import lombok.*;
-import org.springframework.data.util.ProxyUtils;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@Entity
-@NoArgsConstructor
-public class User {
-
+@Table(name = "users")
+@Builder
+@Data
+public class User implements UserDetails {
     @Id
-    private Integer idUser;
+    private String id;
     private String username;
     private String password;
-    private String email;
+    @ManyToMany(fetch = FetchType.EAGER)
+     private List<Role> roles;
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+     // constructores, getters y setters
+
+    // TODO: Cambiar esta lógica
+     @Override
+     public Collection<? extends GrantedAuthority> getAuthorities() {
+         return roles.stream()
+                 .map(role -> new SimpleGrantedAuthority(role.getName()))
+                 .toList();
+     }
+
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || ProxyUtils.getUserClass(this) != ProxyUtils.getUserClass(o))
-            return false;
-        User user = (User) o;
-        return idUser != null && Objects.equals(idUser, user.idUser);
+    public String getUsername() {
+        return this.username;
     }
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
