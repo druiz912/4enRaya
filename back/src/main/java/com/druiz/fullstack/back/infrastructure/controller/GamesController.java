@@ -25,8 +25,8 @@ public class GamesController {
     @Autowired
     SimpMessagingTemplate simpMessagingTemplate;
 
-    @GetMapping("partidas")
-    public Flux<TableroOutputDto> partidas() {
+    @GetMapping("partidas-un-jugador")
+    public Flux<TableroOutputDto> findBoardsWithOnePlayer() {
         log.info("***** Buscando todas las partidas con un solo jugador *****");
         return gameService.findBoardsWithOnePlayer();
     }
@@ -44,7 +44,7 @@ public class GamesController {
         return gameService.findAllGames();
     }
 
-    @DeleteMapping("/{boardId}")
+    @DeleteMapping("id/{boardId}")
     public Mono<ResponseEntity<Void>> deleteBoardById(@PathVariable int boardId){
         return gameService.findBoardById(boardId)
                 .flatMap(b -> gameService.deleteBoardById(b.getId())
