@@ -77,6 +77,34 @@ public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
                .map(user -> new User(user.getUsername(), user.getPassword(), user.getAuthorities()));
    }
 
+   /**
+     * Checks if a user with the given username is registered
+     * @param username the username to check
+     * @return Mono emitting true if user is registered, false otherwise
+     */
+    public Mono<Boolean> isRegistered(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> true)
+                .defaultIfEmpty(false);
+    }
+
+    /**
+     * Authenticates a user with the given username and password
+     * @param username the username to authenticate
+     * @param password the password to authenticate
+     * @return Mono emitting the authenticated user details if successful, empty Mono otherwise
+     * @throws BadCredentialsException if the password is incorrect
+     */
+    public Mono<UserDetails> isAuthenticated(String username, String password) {
+        return userRepository.findByUsername(username)
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
+                .map(user -> new User(user.getUsername(), user.getPassword(), user.getRoles().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getName()))
+                        .toList()))
+                .cast(UserDetails.class)
+                .switchIfEmpty(Mono.error(new BadCredentialsException("Invalid username/password")));
+    }
+
 
 }
 
