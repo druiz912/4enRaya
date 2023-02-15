@@ -1,42 +1,44 @@
 version: "3.8"
 
 services:
+
   postgres:
-    image: postgres:latest
-    restart: always
+    image: postgres:latest  # Imagen base para el servicio postgres
+    restart: always  # Siempre se reiniciará este servicio
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Mapeo de puertos, se usará el 5432 del contenedor para acceder desde el host
     volumes:
       - ./back/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      # Monta el archivo schema.sql de la ruta del host al contenedor en el directorio de inicialización de la base de datos del contenedor
     environment:
-      - DATABASE_HOST=localhost
-      - POSTGRES_USER=druiz
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB = druiz
+      - DATABASE_HOST=localhost  # Variable de entorno para definir el host de la base de datos
+      - POSTGRES_USER=druiz  # Variable de entorno para definir el usuario de la base de datos
+      - POSTGRES_PASSWORD=root  # Variable de entorno para definir la contraseña del usuario de la base de datos
+      - POSTGRES_DB=druiz  # Variable de entorno para definir el nombre de la base de datos
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4  # Imagen base para el servicio pgadmin
     restart: always
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com  # Variable de entorno para definir el email del usuario de pgadmin
+      - PGADMIN_DEFAULT_PASSWORD=admin  # Variable de entorno para definir la contraseña del usuario de pgadmin
     ports:
       - "80:80"
     depends_on:
+      - postgres  # Este servicio depende del servicio postgres
+
+  back:
+    build: ./back  # Se construirá una imagen a partir del archivo Dockerfile en la carpeta ./back
+    container_name: backend  # Nombre del contenedor
+    ports:
+      - "8081:8081"  # Mapeo de puertos, se usará el 8081 del contenedor para acceder desde el host
+    depends_on:
       - postgres
 
-#  back:
-#    build: ./back
-#    container_name: backend
-#    ports:
-#      - "8081:8081"
-#    depends_on:
-#      - postgres
-
-#  front:
-#    build: ./front
-#    container_name: front
-#    ports:
-#      - "8082:8082"
-#    depends_on:
-#      - back
+  front:
+    build: ./front  # Se construirá una imagen a partir del archivo Dockerfile en la carpeta ./front
+    container_name: front
+    ports:
+      - "8080:8080"
+    depends_on:
+      - back
