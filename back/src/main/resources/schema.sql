@@ -1,26 +1,55 @@
-CREATE TABLE IF NOT EXISTS players(
-    id serial PRIMARY KEY,
-    user_player VARCHAR(100)
+CREATE TABLE jugadores (
+  id INTEGER PRIMARY KEY,
+  userPlayer VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS boards
-(
-    id serial NOT NULL PRIMARY KEY,
-    num_rows integer NOT NULL,
-    num_columns integer NOT NULL,
-    id_host_player integer NOT NULL,
-    id_guest_player integer,
-    matriz integer[][] NOT NULL,
-    status VARCHAR(30),
-    CONSTRAINT FK_board_player1 FOREIGN KEY (id_host_player)
-      REFERENCES players (id) ON DELETE SET NULL,
-    CONSTRAINT FK_board_player2 FOREIGN KEY (id_guest_player)
-      REFERENCES players (id) ON DELETE SET NULL
+CREATE TABLE fichas (
+  id INTEGER PRIMARY KEY,
+  jugador_id INTEGER,
+  fila INTEGER,
+  columna INTEGER,
+  disponible BOOLEAN,
+  FOREIGN KEY (jugador_id) REFERENCES jugadores(id)
 );
 
-INSERT INTO players VALUES (1,"Daniel")
-INSERT INTO players VALUES (2,"Emar")
-INSERT INTO players VALUES (3,"Robin")
-INSERT INTO players VALUES (4,"Jesus")
+CREATE TABLE tableros (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  filas INTEGER,
+  columnas INTEGER,
+  status VARCHAR(255)
+);
 
+CREATE TABLE tableros_jugadores (
+  tablero_id INTEGER,
+  jugador_id INTEGER,
+  PRIMARY KEY (tablero_id, jugador_id),
+  FOREIGN KEY (tablero_id) REFERENCES tableros(id),
+  FOREIGN KEY (jugador_id) REFERENCES jugadores(id)
+);
 
+CREATE TABLE tableros_fichas (
+  tablero_id INTEGER,
+  ficha_id INTEGER,
+  PRIMARY KEY (tablero_id, ficha_id),
+  FOREIGN KEY (tablero_id) REFERENCES tableros(id),
+  FOREIGN KEY (ficha_id) REFERENCES fichas(id)
+);
+
+CREATE TABLE users (
+  id VARCHAR(255) PRIMARY KEY,
+  username VARCHAR(255),
+  password VARCHAR(255),
+);
+
+CREATE TABLE roles (
+  id VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+CREATE TABLE users_roles (
+  user_id VARCHAR(255),
+  role_id VARCHAR(255),
+  PRIMARY KEY (user_id, role_id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (role_id) REFERENCES roles(id)
+);
